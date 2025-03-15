@@ -1,10 +1,15 @@
-import React from 'react'
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import Model from '../components/Models/tableModel';
 
 const TableReservations = () => {
   return (
-    <div className='h-screen w-screen'>
-      <h1 className='text-3xl text-black uppercase text-bold'>3d scene for table reservation</h1>
-    </div>
+    <Canvas className=" bg-black h-screen w-screen" camera={{ position: [5, 5, 5], fov: 50 }}>
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} />
+      <Model />
+      <OrbitControls />
+    </Canvas>
   )
 }
 
