@@ -10,7 +10,6 @@ import { Canvas } from '@react-three/fiber';
 import MainCategoryWindow from "../components/categoryWindows/MainCategory.jsx";
 import SubCategoryWindow from "../components/categoryWindows/SubCategory.jsx";
 import ProductWrap3DWindow from "../components/categoryWindows/ProductCategory.jsx";
-// import BurgerModel from "../3dModels/BurgerModel.jsx";
 
 const Section = styled.section`
   display: block;
@@ -72,74 +71,6 @@ const SideBar = styled.div`
     }
   }
 `;
-// const MenuList = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   gap: 0.5rem;
-//   align-items: center;
-//   position: relative;
-//   cursor: pointer;
-//   width: 100%;
-//   img {
-//     width: 80%;
-//     height: auto;
-//     object-fit: cover;
-//   }
-// `;
-
-// const SubCategory = styled(motion.div)`
-//   position: absolute;
-//   top: 0;
-//   left: 18rem;
-//   width: 15vw;
-//   height: 100vh;
-//   background: #fff;
-//   opacity: 1;
-//   visibility: visible;
-//   z-index: -1;
-//   transition: all 200ms ease-out;
-// `;
-
-// const SubMenuList = styled.div`
-// display: flex;
-// flex-direction: column;
-// align-items: center;
-// justify-content: center;
-// height: auto;
-// overflow-y: auto;
-// overflow-x: hidden;
-// outline: none;
-// `
-
-// const SubCatList = styled.div`
-//   position: relative;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   width: 100%;
-//   background: #fff;
-//   padding: 18px 35px;
-//   cursor: pointer;
-//   padding-left: 15px;
-//   padding-right: 15px;
-//   transform: translate(0px, 0px);
-//   opacity: 1;
-//   visibility: inherit;
-// `;
-
-// const ProductWrap3D = styled(motion.div)`
-//   position: absolute;
-//   top: 0;
-//   left: 37.5vw;
-//   width: calc(100vw - (96px + 15vw + 15vw));
-//   height: 100vh;
-//   background: rgba(255,255,255,0.8);
-//   opacity: 1;
-//   visibility: visible;
-//   z-index: -1;
-//   transition: all 200ms ease-out;
-// `;
-
 const Logo = styled.div`
   display: flex;
   flex-direction: column;
@@ -213,16 +144,6 @@ const DishesMenuButton = styled.div`
   padding: 130px 0;
   text-align: center;
   pointer-events: auto;
-  /* ::before{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 300px;
-    background: #fff;
-    z-index: 5;
-  } */
   button {
     position: relative;
     width: 100%;
@@ -268,16 +189,11 @@ const MainMenu = () => {
       setIsMainCategoryOpen(false);
       setIsSubCategoryOpen(false);
       setIsProductWrapOpen(false);
-      setSelectedCategory(null); // Reset selection
+      setSelectedCategory(null);
     } else {
       setIsMainCategoryOpen(true);
     }
   };
-
-  // const handleCategoryClick = (category) => {
-  //   setSelectedCategory(category);
-  //   setIsSubCategoryOpen(true); // Open the sub-category window
-  // };
 
   const handleCategoryClick = (category) => {
     // Check if the clicked category is already selected and the subcategory window is open
@@ -434,23 +350,6 @@ const MainMenu = () => {
 
         {/* Product Wrap 3D Div */}
         {isProductWrapOpen && (
-          // <ProductWrap3D
-          //   variants={slideIn}
-          //   initial="hidden"
-          //   animate="visible"
-          //   exit="exit"
-          // 
-          //   <h2>{selectedCategory} - 3D Product View</h2>
-          //   <div style={{ width: "100%", height: "400px", backgroundColor: "#000" }}>
-          //     <Canvas>
-          //       <ambientLight intensity={0.5} />
-          //       <pointLight position={[10, 10, 10]} />
-          //       <Suspense fallback>
-          //         {selectedCategory === "Burgers" && <BurgerModel />}
-          //       </Suspense>
-          //     </Canvas>
-          //   </div>
-          // </ProductWrap3D>
           <ProductWrap3DWindow selectedCategory={selectedCategory} slideIn={slideIn}>
             {/* Place your Canvas content here (e.g., 3D model, controls, etc.) */}
           </ProductWrap3DWindow>

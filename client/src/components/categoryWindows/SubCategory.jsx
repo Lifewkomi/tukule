@@ -49,7 +49,7 @@ const SubCatList = styled.div`
 const SubCategoryWindow = ({ subCategoryItems, openProductWrap, slideIn, categoryRef}) => {
   return (
     <SubCategoryContainer
-      slideIn={slideIn}
+      variants={slideIn}
       initial="hidden"
       animate="visible"
       exit="exit"
