@@ -53,6 +53,9 @@ const SideBar = styled.div`
     background-color: #d0cdcd;
     box-shadow: 2px 0px 20px rgba(0, 0, 0, 0.1);
     z-index: 22;
+    @media (max-width: 768px) {
+    width: 60px;
+  }
     .Back{
       cursor: pointer;
       position: absolute;
@@ -184,12 +187,16 @@ const MainMenu = () => {
   const [isProductWrapOpen, setIsProductWrapOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null); // Track selected category
 
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+
   const toggleMainCategory = () => {
     if (isMainCategoryOpen) {
       setIsMainCategoryOpen(false);
       setIsSubCategoryOpen(false);
       setIsProductWrapOpen(false);
       setSelectedCategory(null);
+      setSelectedProduct(null);
     } else {
       setIsMainCategoryOpen(true);
     }
@@ -202,17 +209,20 @@ const MainMenu = () => {
       setIsSubCategoryOpen(false);
       setSelectedCategory(null);
       setIsProductWrapOpen(false);
+      setSelectedProduct(null);
     } else {
       // Otherwise, select this category and open subcategory window
       setSelectedCategory(category);
       setIsSubCategoryOpen(true);
-      setIsProductWrapOpen(false)
+      setIsProductWrapOpen(false);
+      setSelectedProduct(null);
     }
   };
 
 
 
-  const openProductWrap = () => {
+  const openProductWrap = (product) => {
+    setSelectedProduct(product);
     setIsProductWrapOpen(true);
   };
 
@@ -350,7 +360,10 @@ const MainMenu = () => {
 
         {/* Product Wrap 3D Div */}
         {isProductWrapOpen && (
-          <ProductWrap3DWindow selectedCategory={selectedCategory} slideIn={slideIn}>
+          <ProductWrap3DWindow 
+            selectedProduct={selectedProduct} 
+            slideIn={slideIn}
+          >
             {/* Place your Canvas content here (e.g., 3D model, controls, etc.) */}
           </ProductWrap3DWindow>
         )}

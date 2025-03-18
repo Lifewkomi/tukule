@@ -6,7 +6,7 @@ import { MenuItems } from "../../assets/assets";
 const MainCategoryContainer = styled(motion.div)`
   position: absolute;
   top: 0;
-  left: 6rem;
+  left: calc(96px + 1rem); /* 96px sidebar + extra spacing */
   width: 15vw;
   height: 100vh;
   display: flex;
@@ -16,6 +16,13 @@ const MainCategoryContainer = styled(motion.div)`
   background-color: #d0cdcd;
   transition: all 300ms ease-out;
   z-index: 20;
+  @media (max-width: 768px) {
+    position: relative;
+    left: 0;
+    width: 100vw;
+    height: auto;
+    padding: 1rem;
+  }
 `;
 
 const ScrollButton = styled.button`

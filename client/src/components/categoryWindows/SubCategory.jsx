@@ -1,4 +1,3 @@
-// src/components/SubCategoryWindow.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
@@ -7,12 +6,20 @@ import styled from 'styled-components';
 const SubCategoryContainer = styled(motion.div)`
   position: absolute;
   top: 0;
-  left: 20rem;
+  left: calc(96px + 15vw + 2rem);
   width: 15vw;
   height: 100vh;
   background: #fff;
   transition: all 200ms ease-out;
   z-index: -1;
+  @media (max-width: 768px) {
+    position: relative;
+    left: 0;
+    width: 100vw;
+    height: auto;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
 `;
 const SubMenuList = styled.div`
   display: flex;
@@ -58,7 +65,7 @@ const SubCategoryWindow = ({ subCategoryItems, openProductWrap, slideIn, categor
       <SubMenuList>
       <CategoryListContainer ref={categoryRef}>
         {subCategoryItems.map((item, index) => (
-          <SubCatList key={index} onClick={openProductWrap}>
+          <SubCatList key={index} onClick={() => openProductWrap(item)}>
             <div className="left-col">
               <img src={item.img} alt={item.name} className="submenu-image" style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
             </div>
