@@ -4,9 +4,10 @@ import Model from '../components/Models/tableModel';
 
 const TableReservations = () => {
   return (
-    <Canvas className=" bg-black h-screen w-screen" camera={{ position: [5, 5, 5], fov: 50 }}>
-      <ambientLight intensity={0.5} />
+    <Canvas camera={{ position: [1, 2, 3], fov: 50 }}>
+      <ambientLight intensity={1} />
       <pointLight position={[10, 10, 10]} />
+      <directionalLight position={[5, 10, 5]} intensity={2} />
       <Model />
       <OrbitControls />
     </Canvas>

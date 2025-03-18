@@ -19,10 +19,10 @@ const Globals = createGlobalStyle`
        color: inherit
     }
     
-    /* h1,h2,h3,h4,h5,h6{
-      font-size: 1rem;
+    h1,h2,h3,h4,h5,h6,span,p{
+      /* font-size: 1rem; */
       font-family: ${props => props.theme.Font1};
-    } */
+    }
 `;
 
 export default Globals;

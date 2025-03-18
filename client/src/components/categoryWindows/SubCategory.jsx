@@ -1,0 +1,77 @@
+// src/components/SubCategoryWindow.jsx
+import React from 'react';
+import { motion } from 'framer-motion';
+import styled from 'styled-components';
+
+
+const SubCategoryContainer = styled(motion.div)`
+  position: absolute;
+  top: 0;
+  left: 20rem;
+  width: 15vw;
+  height: 100vh;
+  background: #fff;
+  transition: all 200ms ease-out;
+  z-index: -1;
+`;
+const SubMenuList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  width: 100%;
+`;
+const CategoryListContainer = styled.div`
+  overflow-y: auto;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 100%;
+  padding: 0.5rem;
+  height: 100vh;
+  &::-webkit-scrollbar {
+    display: none;
+  };
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+`;
+
+const SubCatList = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #fff;
+  padding: 18px 35px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+`;
+
+const SubCategoryWindow = ({ subCategoryItems, openProductWrap, slideIn, categoryRef}) => {
+  return (
+    <SubCategoryContainer
+      slideIn={slideIn}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      
+    >
+      <SubMenuList>
+      <CategoryListContainer ref={categoryRef}>
+        {subCategoryItems.map((item, index) => (
+          <SubCatList key={index} onClick={openProductWrap}>
+            <div className="left-col">
+              <img src={item.img} alt={item.name} className="submenu-image" style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
+            </div>
+            <div className="right-col">
+              <h3 className="submenu-name">{item.name}</h3>
+              {/* <p className="submenu-description">{item.description}</p> */}
+            </div>
+          </SubCatList>
+        ))}
+      </CategoryListContainer>
+      </SubMenuList>
+    </SubCategoryContainer>
+  );
+};
+
+export default SubCategoryWindow;
