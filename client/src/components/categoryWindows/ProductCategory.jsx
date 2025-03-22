@@ -36,7 +36,7 @@ const ProductWrap3DWindow = ({ selectedProduct, slideIn, children }) => {
       <h2>
         {selectedProduct ? selectedProduct.name : "Product"} - 3D View
       </h2>
-      <div style={{ width: "100%", height: "400px", backgroundColor: "#000" }}>
+      <div style={{ width: "100%", height: "550px", backgroundColor: "#000" }}>
         <Canvas>
           {children}
         </Canvas>
