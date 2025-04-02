@@ -1,7 +1,7 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
 import { Light } from "./styles/themes";
-import Globals from "./styles/Globals";
+import Globals from "./styles/globals";
 import { Route, Routes } from "react-router-dom";
 
 

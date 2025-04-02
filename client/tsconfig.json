@@ -13,9 +13,12 @@
       "resolveJsonModule": true,                   // Allow importing JSON files as modules.
       "isolatedModules": true,                     // Ensure that each file can be safely transpiled without relying on other imports.
       "noEmit": true,                              // Do not emit output (Vite handles bundling).
-      "jsx": "react-jsx"                           // Enable the new JSX transform for React.
+      "jsx": "react-jsx" ,
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["src/*"]
+      },                          // Enable the new JSX transform for React.
     },
     "include": ["src"],                            // Include all files in the src directory.
     "exclude": ["node_modules", "dist"]            // Exclude node_modules and output directory.
   }
-  
