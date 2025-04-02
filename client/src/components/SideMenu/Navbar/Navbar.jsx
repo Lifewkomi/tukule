@@ -46,10 +46,11 @@ const Footer = styled.div`
 
 const links = [
   { title: "Menu", to: "/menu" },
-  { title: "Table Reservations", to: "/reservations" },
-  { title: "Offers", to: "/offers" },
+  { title: "Reserve a Table", to: "/reservations" },
   { title: "Shop", to: "/shop" },
   { title: "Contacts", to: "/contacts" },
+  { title: "Admin", to: "/admin" },
+
 ];
 
 const footerLinks = [

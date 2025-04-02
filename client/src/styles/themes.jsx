@@ -11,8 +11,8 @@ export const Light = {
     Body: '#a6a999',
     // Body: orange.orange7,
     Text: blackA.blackA11 ,
-    logo: "#FCE181",  
-    MenuColor: " #c9fd74",  
+    logo: "#FCE181",    
+    MenuColor: " #c9fd74",
     MainCategory: blackA.blackA5,
 };
   

@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",                          // Use the latest ECMAScript features.
+      "lib": ["DOM", "DOM.Iterable", "ESNext"],      // Specify libraries to include, such as the DOM and modern JS features.
+      "allowJs": true,                             // Allow JavaScript files to be compiled.
+      "skipLibCheck": true,                        // Skip type checking of declaration files for faster builds.
+      "esModuleInterop": true,                     // Enables interoperability between CommonJS and ES Modules.
+      "allowSyntheticDefaultImports": true,        // Allow default imports from modules with no default export.
+      "strict": true,                              // Enable all strict type-checking options.
+      "forceConsistentCasingInFileNames": true,    // Ensure file names are case-sensitive.
+      "module": "ESNext",                          // Specify module code generation: ESNext works well with Vite.
+      "moduleResolution": "Node",                  // Use Node's resolution logic.
+      "resolveJsonModule": true,                   // Allow importing JSON files as modules.
+      "isolatedModules": true,                     // Ensure that each file can be safely transpiled without relying on other imports.
+      "noEmit": true,                              // Do not emit output (Vite handles bundling).
+      "jsx": "react-jsx"                           // Enable the new JSX transform for React.
+    },
+    "include": ["src"],                            // Include all files in the src directory.
+    "exclude": ["node_modules", "dist"]            // Exclude node_modules and output directory.
+  }
+  

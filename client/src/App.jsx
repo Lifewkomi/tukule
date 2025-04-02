@@ -6,12 +6,12 @@ import { Route, Routes } from "react-router-dom";
 
 
 //Pages
-import Home from "./Pages/Home";
+import Home from "./pages/Home";
 import MainMenu from "./pages/MainMenu";
-// import TableReservations from "./pages/TableReservations";
-import Offers from "./pages/Offers";
+import TableReservations from "./pages/TableReservations.tsx";
 import Shop from "./pages/Shop";
-import Contact from "./Pages/Contact";
+import Contact from "./pages/Contact";
+import AdminPanel from "./pages/AdminPanel";
 
 
 function App() {
@@ -23,10 +23,11 @@ function App() {
           <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/menu" element={<MainMenu />} />
-              {/* <Route path="/reservations" element={<TableReservations />} /> */}
-              <Route path="/offers" element={<Offers />} />
+              <Route path="/reservations" element={<TableReservations />} />
               <Route path="/shop" element={<Shop />} />
               <Route path="/contacts" element={<Contact />} />
+              <Route path="/admin" element={<AdminPanel/>} />
+
           </Routes>
         </main>
       </ThemeProvider>
