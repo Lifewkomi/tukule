@@ -12,6 +12,10 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': 'http://localhost:5000',
+    },
+    hmr: true, // Ensure hot module replacement is enabled
+    watch: {
+      usePolling: false // Try changing this if you're on certain file systems
     }
   },
   resolve: {

@@ -204,7 +204,7 @@ const Reservations: React.FC = () => {
   return (
     <div className="page-transition space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="section-heading mb-0">Reservation Management</h2>
+        <h2 className="section-heading mb-0 text-3xl">Reserve a Tablerkkrkrkrkr</h2>
       </div>
       
       <Tabs defaultValue="visualization">
@@ -213,31 +213,31 @@ const Reservations: React.FC = () => {
             <Calendar className="h-4 w-4 mr-2" />
             3D Table Visualization
           </TabsTrigger>
-          {/* <TabsTrigger value="list">
+          <TabsTrigger value="list">
             <CalendarDays className="h-4 w-4 mr-2" />
             Reservation List
-          </TabsTrigger> */}
+          </TabsTrigger>
         </TabsList>
         
         <TabsContent value="visualization" className="pt-6">
           <TableVisualization tables={tables} onTableClick={handleTableClick} />
         </TabsContent>
         
-        {/* <TabsContent value="list" className="pt-6">
+        <TabsContent value="list" className="pt-6">
           <ReservationList 
             reservations={reservations} 
             onViewDetails={handleViewReservationDetails}
             onUpdateStatus={handleUpdateReservationStatus}
           />
-        </TabsContent> */}
+        </TabsContent>
       </Tabs>
       
-      {/* <ReservationDetails 
+      <ReservationDetails 
         reservation={selectedReservation}
         isOpen={isReservationDetailsOpen}
         onClose={() => setIsReservationDetailsOpen(false)}
         onUpdateStatus={handleUpdateReservationStatus}
-      /> */}
+      />
     </div>
   );
 };
