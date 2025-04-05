@@ -9,9 +9,6 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  optimizeDeps: {
-    include: ['@react-three/drei'],
-  },
   server: {
     proxy: {
       '/api': 'http://localhost:5000',

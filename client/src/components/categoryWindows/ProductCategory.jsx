@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { Canvas } from '@react-three/fiber';
+// import { Canvas } from '@react-three/fiber';
 
 const ProductWrapContainer = styled(motion.div)`
   position: absolute;
@@ -37,9 +37,9 @@ const ProductWrap3DWindow = ({ selectedProduct, slideIn, children }) => {
         {selectedProduct ? selectedProduct.name : "Product"} - 3D View
       </h2>
       <div style={{ width: "100%", height: "550px", backgroundColor: "#000" }}>
-        <Canvas>
+        {/* <Canvas>
           {children}
-        </Canvas>
+        </Canvas> */}
       </div>
     </ProductWrapContainer>
   );

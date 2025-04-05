@@ -8,7 +8,7 @@ import { Route, Routes } from "react-router-dom";
 //Pages
 import Home from "./pages/Home";
 import MainMenu from "./pages/MainMenu";
-import TableReservations from "./pages/TableReservations.tsx";
+import TableVisualization from "./pages/Reservations";
 import Shop from "./pages/Shop";
 import Contact from "./pages/Contact";
 import AdminPanel from "./pages/AdminPanel";
@@ -23,7 +23,7 @@ function App() {
           <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/menu" element={<MainMenu />} />
-              <Route path="/reservations" element={<TableReservations />} />
+              <Route path="/reservations" element={<TableVisualization />} />
               <Route path="/shop" element={<Shop />} />
               <Route path="/contacts" element={<Contact />} />
               <Route path="/admin" element={<AdminPanel/>} />

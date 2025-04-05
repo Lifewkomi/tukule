@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -164,24 +163,27 @@ const TableVisualization: React.FC<TableVisualizationProps> = ({
       const rect = rendererRef.current.domElement.getBoundingClientRect();
       mouseRef.current.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
       mouseRef.current.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-      // Perform raycasting
+    
       if (cameraRef.current && sceneRef.current) {
         raycasterRef.current.setFromCamera(mouseRef.current, cameraRef.current);
-        const tableObjects = Object.values(tableObjectsRef.current);
-        const intersects = raycasterRef.current.intersectObjects(tableObjects);
-
+        // Ensure tableObjectsRef.current is an array (default to empty array if undefined)
+        const tableMeshes = Object.values(tableObjectsRef.current) || [];
+        const intersects = raycasterRef.current.intersectObjects(tableMeshes);
+        
         if (intersects.length > 0) {
           const tableId = intersects[0].object.userData.tableId;
-          const table = tables.find(t => t.id === tableId) || null;
-          setHoveredTable(table);
-          containerRef.current.style.cursor = "pointer";
+          // Log for debugging:
+          console.log("Intersected tableId:", tableId);
+          const foundTable = tables.find(t => t.id === tableId) || null;
+          setHoveredTable(foundTable);
+          if (containerRef.current) containerRef.current.style.cursor = "pointer";
         } else {
           setHoveredTable(null);
-          containerRef.current.style.cursor = "default";
+          if (containerRef.current) containerRef.current.style.cursor = "default";
         }
       }
     };
+    
 
     const handleClick = () => {
       if (hoveredTable) {
@@ -208,7 +210,7 @@ const TableVisualization: React.FC<TableVisualizationProps> = ({
 
   // Update tables in the scene
   useEffect(() => {
-    if (!sceneRef.current) return;
+    if (!sceneRef.current) return; // Exit early if tables is undefined
 
     // Remove existing tables
     Object.values(tableObjectsRef.current).forEach(table => {
@@ -319,6 +321,7 @@ const TableVisualization: React.FC<TableVisualizationProps> = ({
       
       // Store reference to table mesh
       tableObjectsRef.current[table.id] = tableMesh;
+      console.log(tableObjectsRef)
     });
   }, [tables, view]);
 
@@ -387,13 +390,13 @@ const TableVisualization: React.FC<TableVisualizationProps> = ({
   };
 
   return (
-    <Card className="h-full">
+    <Card className="h-full ">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-center">
           <div>
             <CardTitle>Restaurant Layout</CardTitle>
             <CardDescription>
-              3D visualization of tables and their status
+              3D visualization of Our tables and their status of reservation
             </CardDescription>
           </div>
           <Tabs
@@ -426,14 +429,17 @@ const TableVisualization: React.FC<TableVisualizationProps> = ({
           </div>
         )}
         
-        <div className="absolute bottom-4 right-4 flex gap-2">
+        <div className="absolute bottom-4 right-4 flex gap-2 z-50">
           {["available", "reserved", "occupied"].map((status) => (
-            <div key={status} className="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-md border border-border shadow-sm">
-              <div 
-                className="w-3 h-3 rounded-full" 
-                style={{ backgroundColor: `#${getTableColor(status).toString(16)}` }}
+            <div
+              key={status}
+              className="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-md border border-gray-300 shadow-sm"
+            >
+              <div
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: `#${getTableColor(status).toString(16).padStart(6, "0")}` }}
               />
-              <span className="text-xs">{getStatusText(status)}</span>
+              <span className="text-xs text-gray-800">{getStatusText(status)}</span>
             </div>
           ))}
         </div>
