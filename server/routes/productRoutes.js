@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../models/productModel.js");
 
+//----CRUD OPERATIONS-----
 // ----- READ Operation -----
 // GET /api/products
 // Retrieve a list of all products from the database.
@@ -27,7 +28,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Update an existing product by its ID.
+// UPDATE an existing product by its ID.
 router.put("/:id", async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
@@ -52,15 +53,5 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to delete product" });
   }
 });
-// router.delete('/:id', async (req, res) => {
-//   try {
-//     const deleted = await Product.findByIdAndDelete(req.params.id);
-//     if (!deleted) {
-//       return res.status(404).json({ error: 'Product not found' });
-//     }
-//     res.json({ message: 'Product deleted successfully' });
-//   } catch (error) {
-//     res.status(500).json({ error: 'Failed to delete product' });
-//   }
-// });
+
 module.exports = router;
