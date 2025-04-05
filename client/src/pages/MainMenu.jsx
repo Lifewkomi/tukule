@@ -1,35 +1,16 @@
-import React, { Suspense, useRef, useState, useCallback, useMemo } from "react";
+import React, { Suspense, useRef, useState }  from "react";
 import styled from "styled-components";
-import { IconClock, IconPhone, IconX } from "@tabler/icons-react";
+import { IconClock, IconPhone, IconX} from "@tabler/icons-react";
 import { motion } from "framer-motion";
 
 import logo from "../Assets/logo.png";
+import {MenuItems, Burgers, Main_Dishes, Pizzeria, Sauces, Salads, Drinks } from "../assets/assets.jsx";
 import { slideIn } from "../components/Animation/Anim.jsx";
+// import { Canvas } from '@react-three/fiber';
+import MainCategoryWindow from "../components/categoryWindows/MainCategory.jsx";
+import SubCategoryWindow from "../components/categoryWindows/SubCategory.jsx";
+import ProductWrap3DWindow from "../components/categoryWindows/ProductCategory.jsx";
 
-// Lazy load components and assets
-const MainCategoryWindow = React.lazy(() => import("../components/categoryWindows/MainCategory.jsx"));
-const SubCategoryWindow = React.lazy(() => import("../components/categoryWindows/SubCategory.jsx"));
-const ProductWrap3DWindow = React.lazy(() => import("../components/categoryWindows/ProductCategory.jsx"));
-
-// Lazy load menu data
-const loadMenuItems = () => import("../assets/assets.jsx").then(module => module.MenuItems);
-const loadCategoryItems = (category) => {
-  if (!category) return Promise.resolve([]);
-  
-  return import("../assets/assets.jsx").then(module => {
-    switch (category.toLowerCase()) {
-      case "burgers": return module.Burgers;
-      case "main dishes": return module.Main_Dishes;
-      case "pizzeria": return module.Pizzeria;
-      case "sauces": return module.Sauces;
-      case "salads": return module.Salads;
-      case "drinks": return module.Drinks;
-      default: return [];
-    }
-  });
-};
-
-// Optimized styled components
 const Section = styled.section`
   display: block;
   background-color: ${(props) => props.theme.Body};
@@ -47,7 +28,6 @@ const Section = styled.section`
     columns: #808080;
   }
 `;
-
 const Container1 = styled.div`
   display: flex;
   flex-direction: column;
@@ -55,32 +35,45 @@ const Container1 = styled.div`
   justify-content: center;
   padding: 2rem 0;
 `;
-
 const SideBar = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   z-index: 100;
-`;
-
-const MainBar = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 96px;
-  height: 100%;
-  background-color: #d0cdcd;
-  box-shadow: 2px 0px 20px rgba(0, 0, 0, 0.1);
-  z-index: 22;
-  @media (max-width: 768px) {
+  .main-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 96px;
+    height: 100%;
+    background-color: #d0cdcd;
+    box-shadow: 2px 0px 20px rgba(0, 0, 0, 0.1);
+    z-index: 22;
+    @media (max-width: 768px) {
     width: 60px;
   }
+    .Back{
+      cursor: pointer;
+      position: absolute;
+      bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 48px;
+      border: 1px solid #000;
+      border-radius: 8px;
+      background: transparent;
+      transition: all 500ms ease-out;
+      z-index: 10;
+    }
+  }
 `;
-
 const Logo = styled.div`
   display: flex;
   flex-direction: column;
@@ -99,50 +92,49 @@ const Logo = styled.div`
   }
 `;
 
-const BarButton = styled.div`
+const Phone = styled.div`
+  position: relative;
+  top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 48px;
+  height: 48px;
   border: 1px solid #000;
   border-radius: 8px;
   background: transparent;
   transition: all 500ms ease-out;
   z-index: 10;
-  
-  svg {
-    width: ${props => props.iconSize || "25px"};
-    height: ${props => props.iconSize || "25px"};
+  svg{
+    height: 50px;
+    width: 50px;
     stroke-width: 1px;
   }
 `;
-
-const Phone = styled(BarButton)`
-  position: relative;
-  top: 2rem;
-  height: 48px;
-  
-  svg {
-    height: 50px;
-    width: 50px;
-  }
-`;
-
-const Hours = styled(BarButton)`
+const Hours = styled.div`
   position: relative;
   top: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
   height: 80px;
+  border: 1px solid #000;
+  border-radius: 8px;
   font-family: "Roboto", sans-serif;
   text-decoration: none;
-  
-  svg {
+  z-index: 10;
+  svg{
     position: absolute;
     top: 69px;
     z-index: 20;
+    width: 25px;
+    height: 25px;
+    stroke-width: 1px;
   }
 `;
-
 const DishesMenuButton = styled.div`
   position: absolute;
   top: 25%;
@@ -155,7 +147,6 @@ const DishesMenuButton = styled.div`
   padding: 130px 0;
   text-align: center;
   pointer-events: auto;
-  
   button {
     position: relative;
     width: 100%;
@@ -170,64 +161,36 @@ const DishesMenuButton = styled.div`
     cursor: pointer;
     outline: none;
     z-index: 9;
-  }
-  
-  .closeIcon {
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    align-items: center;
-    
-    svg {
-      width: 65px;
-      height: 50px;
-      stroke-width: 1px;
+    .closeIcon{
+      display: flex;
+      flex-direction: column;
+      justify-items: center;
+      align-items: center;
+      svg{
+        width: 65px;
+        height: 50px;
+        stroke-width: 1px;
+      }
+    }
+    .MenuName{
+      display: flex;
+      flex-direction: column;
+      font-size: 18px;
+      font-family: ${props => props.theme.Font1};
     }
   }
-  
-  .MenuName {
-    display: flex;
-    flex-direction: column;
-    font-size: 18px;
-    font-family: ${props => props.theme.Font1};
-  }
-`;
-
-const BackButton = styled(BarButton)`
-  cursor: pointer;
-  position: absolute;
-  bottom: 2rem;
-  height: 48px;
 `;
 
 const MainMenu = () => {
-  // State with more selective updates
   const [isMainCategoryOpen, setIsMainCategoryOpen] = useState(false);
   const [isSubCategoryOpen, setIsSubCategoryOpen] = useState(false);
   const [isProductWrapOpen, setIsProductWrapOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null); // Track selected category
+
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [menuItems, setMenuItems] = useState([]);
-  const [subCategoryItems, setSubCategoryItems] = useState([]);
-  
-  const categoryRef = useRef(null);
 
-  // Load menu items only when needed
-  React.useEffect(() => {
-    if (isMainCategoryOpen && menuItems.length === 0) {
-      loadMenuItems().then(items => setMenuItems(items));
-    }
-  }, [isMainCategoryOpen, menuItems.length]);
 
-  // Load subcategory items only when needed
-  React.useEffect(() => {
-    if (selectedCategory) {
-      loadCategoryItems(selectedCategory).then(items => setSubCategoryItems(items));
-    }
-  }, [selectedCategory]);
-
-  // Memoized toggle function
-  const toggleMainCategory = useCallback(() => {
+  const toggleMainCategory = () => {
     if (isMainCategoryOpen) {
       setIsMainCategoryOpen(false);
       setIsSubCategoryOpen(false);
@@ -237,56 +200,80 @@ const MainMenu = () => {
     } else {
       setIsMainCategoryOpen(true);
     }
-  }, [isMainCategoryOpen]);
+  };
 
-  // Memoized category click handler
-  const handleCategoryClick = useCallback((category) => {
+  const handleCategoryClick = (category) => {
+    // Check if the clicked category is already selected and the subcategory window is open
     if (selectedCategory === category && isSubCategoryOpen) {
+      // Toggle off: close subcategory window and clear selection
       setIsSubCategoryOpen(false);
       setSelectedCategory(null);
+      setIsProductWrapOpen(false);
+      setSelectedProduct(null);
     } else {
+      // Otherwise, select this category and open subcategory window
       setSelectedCategory(category);
       setIsSubCategoryOpen(true);
-    }
-    
-    // Only reset product state when necessary
-    if (isProductWrapOpen) {
       setIsProductWrapOpen(false);
       setSelectedProduct(null);
     }
-  }, [selectedCategory, isSubCategoryOpen, isProductWrapOpen]);
-
-  // Memoized product open handler
-  const openProductWrap = useCallback((product) => {
+  };
+  const openProductWrap = (product) => {
     setSelectedProduct(product);
     setIsProductWrapOpen(true);
-  }, []);
+  };
 
-  // Memoized scroll handler
-  const scrollCategories = useCallback((direction) => {
+  const renderSubCategoryItems = () => {
+    switch (selectedCategory?.toLowerCase()) {
+      case "burgers":
+        return Burgers;
+      case "main dishes":
+        return Main_Dishes;
+      case "pizzeria":
+        return Pizzeria;
+      case "sauces":
+        return Sauces;
+      case "salads":
+        return Salads;
+      case "drinks":
+        return Drinks;
+      default:
+        return [];
+    }
+  };
+
+  const categoryRef = useRef(null);
+
+  const scrollCategories = (direction) => {
     if (categoryRef.current) {
       const container = categoryRef.current;
-      const scrollStep = 100;
-      
+      const scrollStep = 100; // Number of pixels to scroll each click
+  
       if (direction === "up") {
+        // If we're at the top, wrap to the bottom
         if (container.scrollTop === 0) {
           container.scrollTo({
-            top: container.scrollHeight,
+            top: container.scrollHeight, // Jump to the very bottom
             behavior: "smooth",
           });
         } else {
+          // Otherwise, scroll up normally
           container.scrollBy({
             top: -scrollStep,
             behavior: "smooth",
           });
         }
       } else {
+        // direction === "down"
+        // Check if we've reached (or passed) the bottom of the container
         if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
+          // If so, wrap to the top
           container.scrollTo({
             top: 0,
             behavior: "smooth",
           });
         } else {
+          // Otherwise, scroll down normally
           container.scrollBy({
             top: scrollStep,
             behavior: "smooth",
@@ -294,51 +281,8 @@ const MainMenu = () => {
         }
       }
     }
-  }, []);
-
-  // Render main content based on current state
-  const renderMainContent = useMemo(() => {
-    return (
-      <Suspense fallback={<div>Loading...</div>}>
-        {isProductWrapOpen && (
-          <ProductWrap3DWindow 
-            selectedProduct={selectedProduct} 
-            slideIn={slideIn}
-          />
-        )}
-        {!isProductWrapOpen && isSubCategoryOpen && (
-          <SubCategoryWindow
-            subCategoryItems={subCategoryItems}
-            openProductWrap={openProductWrap}
-            slideIn={slideIn}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            categoryRef={categoryRef}
-          />
-        )}
-        {!isProductWrapOpen && !isSubCategoryOpen && isMainCategoryOpen && (
-          <MainCategoryWindow
-            categories={menuItems}
-            scrollCategories={scrollCategories}
-            handleCategoryClick={handleCategoryClick}
-            categoryRef={categoryRef}
-            slideIn={slideIn}
-          />
-        )}
-      </Suspense>
-    );
-  }, [
-    isMainCategoryOpen, 
-    isSubCategoryOpen, 
-    isProductWrapOpen, 
-    selectedProduct,
-    menuItems,
-    subCategoryItems,
-    scrollCategories,
-    handleCategoryClick,
-    openProductWrap
-  ]);
+  };
+  
 
   return (
     <Section>
@@ -350,7 +294,7 @@ const MainMenu = () => {
         </p>
       </Container1>
       <SideBar>
-        <MainBar>
+        <div className="main-bar">
           <Logo>
             <a href="/">
               <img src={logo} alt="Logo" />
@@ -380,16 +324,49 @@ const MainMenu = () => {
               )}
             </button>
           </DishesMenuButton>
-          <BackButton className="Back">
+          <div className="Back" >
             <span className="text-base text-black uppercase">Back</span>
-          </BackButton>
-        </MainBar>
+          </div>
+        </div>
 
-        {/* Main Content - Conditionally rendered */}
-        {renderMainContent}
+        {/* MAIN CATEGORY WINDOW */}
+        {isMainCategoryOpen && (
+          <MainCategoryWindow
+            categories={MenuItems}
+            scrollCategories={scrollCategories}
+            handleCategoryClick={handleCategoryClick}
+            categoryRef={categoryRef}
+            slideIn={slideIn}
+
+          />
+        )}
+
+        {/* SUB CATEGORY DIV WINDOW */}
+        {isSubCategoryOpen && (
+          
+          <SubCategoryWindow
+            subCategoryItems={renderSubCategoryItems()}
+            openProductWrap={openProductWrap}
+            slideIn={slideIn}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            categoryRef={categoryRef}
+          />
+        )}
+
+        {/* Product Wrap 3D Div */}
+        {isProductWrapOpen && (
+          <ProductWrap3DWindow 
+            selectedProduct={selectedProduct} 
+            slideIn={slideIn}
+          >
+            {/* Place your Canvas content here (e.g., 3D model, controls, etc.) */}
+          </ProductWrap3DWindow>
+        )}
       </SideBar>
     </Section>
   );
-};
+}
 
-export default React.memo(MainMenu);
+export default MainMenu;
