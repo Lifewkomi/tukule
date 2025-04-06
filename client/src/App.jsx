@@ -23,7 +23,7 @@ function App() {
             <Routes>
               {/* <Route path="/" element={<Home />} />
               <Route path="/menu" element={<MainMenu />} /> */}
-              <Route path="/reservations" element={<TableVisualization />} />
+              <Route path="/" element={<TableVisualization />} />
               {/* <Route path="/shop" element={<Shop />} />
               <Route path="/contacts" element={<Contact />} />
               <Route path="*" element={<NotFound />} /> */}
