@@ -1,12 +1,11 @@
 import React, { Suspense, useRef, useState }  from "react";
 import styled from "styled-components";
 import { IconClock, IconPhone, IconX} from "@tabler/icons-react";
-import { motion } from "framer-motion";
+import { motion as Motion} from "framer-motion";
 
 import logo from "../Assets/logo.png";
 import {MenuItems, Burgers, Main_Dishes, Pizzeria, Sauces, Salads, Drinks } from "../assets/assets.jsx";
 import { slideIn } from "../components/Animation/Anim.jsx";
-// import { Canvas } from '@react-three/fiber';
 import MainCategoryWindow from "../components/categoryWindows/MainCategory.jsx";
 import SubCategoryWindow from "../components/categoryWindows/SubCategory.jsx";
 import ProductWrap3DWindow from "../components/categoryWindows/ProductCategory.jsx";

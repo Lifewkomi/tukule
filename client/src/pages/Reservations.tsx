@@ -1,7 +1,6 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Calendar, CalendarDays, Users } from "lucide-react";
+import { Calendar, CalendarDays, Users, Filter } from "lucide-react";
 import {
   Tabs,
   TabsContent,
@@ -9,9 +8,9 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import TableVisualization from "@/components/reservations/TableVisualization";
-import ReservationList from "@/components/reservations/ReservationList";
-import ReservationDetails from "@/components/reservations/ReservationDetails";
 import { toast } from "sonner";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 // Type definitions
 type TableStatus = "available" | "reserved" | "occupied";
@@ -127,12 +126,27 @@ interface Reservation {
   specialRequests?: string;
 }
 
+const getStatusColor = (status: TableStatus) => {
+  switch (status) {
+    case "available":
+      return "bg-green-100 text-green-800 border-green-300";
+    case "reserved":
+      return "bg-blue-100 text-blue-800 border-blue-300";
+    case "occupied":
+      return "bg-red-100 text-red-800 border-red-300";
+    default:
+      return "bg-gray-100 text-gray-800 border-gray-300";
+  }
+};
+
 const Reservations: React.FC = () => {
   const [tables, setTables] = useState<Table[]>(demoTables);
   const [reservations, setReservations] = useState<Reservation[]>(demoReservations);
   const [selectedTable, setSelectedTable] = useState<string | null>(null);
   const [selectedReservation, setSelectedReservation] = useState<Reservation | null>(null);
   const [isReservationDetailsOpen, setIsReservationDetailsOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<string>("2023-08-15");
+  const [filterCapacity, setFilterCapacity] = useState<number | null>(null);
 
   const handleTableClick = (tableId: string) => {
     setSelectedTable(tableId);
@@ -192,52 +206,121 @@ const Reservations: React.FC = () => {
       toast.error("Failed to update reservation status");
     }
   };
-
-  const handleViewReservationDetails = (reservationId: string) => {
-    const reservation = reservations.find((res) => res.id === reservationId);
-    if (reservation) {
-      setSelectedReservation(reservation);
-      setIsReservationDetailsOpen(true);
-    }
+  const handleBookTable = (tableId: string) => {
+    // In a real app, you would open a reservation form here
+    toast.info(`Started booking for Table ${tables.find(t => t.id === tableId)?.name}`);
+    // For demo purposes, we'll just show an info message
   };
 
+  // Filter tables based on capacity
+  const filteredTables = filterCapacity 
+    ? tables.filter(table => table.capacity >= filterCapacity)
+    : tables;
+
   return (
-    <div className="page-transition space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="section-heading mb-0 text-3xl">Reserve a Tablerkkrkrkrkr</h2>
+    <div className="page-transition h-screen bg-[#a6a999]">
+      <div className="flex sm:justify-center ">
+        <h2 className="section-heading mb-0 text-4xl">Reserve a Table</h2>
       </div>
-      
-      <Tabs defaultValue="visualization">
-        <TabsList>
-          <TabsTrigger value="visualization">
-            <Calendar className="h-4 w-4 mr-2" />
-            3D Table Visualization
-          </TabsTrigger>
-          <TabsTrigger value="list">
-            <CalendarDays className="h-4 w-4 mr-2" />
-            Reservation List
-          </TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="visualization" className="pt-6">
-          <TableVisualization tables={tables} onTableClick={handleTableClick} />
-        </TabsContent>
-        
-        <TabsContent value="list" className="pt-6">
-          <ReservationList 
-            reservations={reservations} 
-            onViewDetails={handleViewReservationDetails}
-            onUpdateStatus={handleUpdateReservationStatus}
-          />
-        </TabsContent>
-      </Tabs>
-      
-      <ReservationDetails 
-        reservation={selectedReservation}
-        isOpen={isReservationDetailsOpen}
-        onClose={() => setIsReservationDetailsOpen(false)}
-        onUpdateStatus={handleUpdateReservationStatus}
-      />
+
+      {/* Main content with left-right split */}
+      <div className="flex flex-col lg:flex-row gap-6 justify-center">
+
+        {/* Left column - Table selection and booking */}
+        <div className="w-full lg:w-1/5 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <CalendarDays className="h-5 w-5 mr-2" />
+                Available Tables
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {/* Filter options */}
+                <div className="flex items-center gap-2 mb-4">
+                  <Filter className="h-4 w-4" />
+                  <span className="text-sm font-medium">Filter by capacity:</span>
+                  <div className="flex gap-2">
+                    {[null, 2, 4, 6, 8].map((cap) => (
+                      <Button 
+                        key={cap || 'all'}
+                        variant={filterCapacity === cap ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setFilterCapacity(cap)}
+                      >
+                        {cap ? `${cap}+` : 'All'}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* List of tables */}
+                <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+                  {filteredTables.map(table => (
+                    <div 
+                      key={table.id}
+                      className={`p-8 border rounded-md cursor-pointer transition-all ${
+                        selectedTable === table.id ? 'ring-2 ring-offset-1 ring-primary' : ''
+                      }`}
+                      onClick={() => setSelectedTable(table.id)}
+                    >
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="font-medium">{table.name}</span>
+                        <Badge 
+                          variant="outline" 
+                          className={`${getStatusColor(table.status)}`}
+                        >
+                          {table.status}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <Users className="h-3 w-3 mr-1" />
+                        Capacity: {table.capacity} people
+                      </div>
+                      <div className="mt-3 flex justify-between">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleTableClick(table.id);
+                          }}
+                        >
+                          Details
+                        </Button>
+                        <Button
+                          variant="default"
+                          size="sm"
+                          disabled={table.status !== "available"}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleBookTable(table.id);
+                          }}
+                        >
+                          Book Now
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Right column - 3D Visualization */}
+        <div className="w-full lg:w-2/3">
+            <CardContent className="h-full">
+              <TableVisualization 
+                tables={tables} 
+                onTableClick={handleTableClick}
+                selectedTableId={selectedTable}
+              />
+            </CardContent>
+
+        </div>
+      </div>
     </div>
   );
 };
