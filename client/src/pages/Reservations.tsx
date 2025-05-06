@@ -25,7 +25,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
+import styled from "styled-components";
 
+const ReserveDiv = styled.div`
+  padding: 1rem;
+`
 // Type definitions
 type TableStatus = "available" | "reserved" | "occupied";
 type ReservationStatus = "pending" | "confirmed" | "cancelled";
@@ -46,7 +50,7 @@ const demoTables = [
     id: "2",
     name: "Table 2",
     capacity: 2,
-    status: "reserved" as TableStatus,
+    status: "available" as TableStatus,
     x: -3,
     y: -5,
     width: 1,
@@ -56,7 +60,7 @@ const demoTables = [
     id: "3",
     name: "Table 3",
     capacity: 4,
-    status: "available" as TableStatus,
+    status: "reserved" as TableStatus,
     x: -1,
     y: -5,
     width: 1.2,
@@ -76,7 +80,7 @@ const demoTables = [
     id: "5",
     name: "Table 5",
     capacity: 4,
-    status: "reserved" as TableStatus,
+    status: "occupied" as TableStatus,
     x: 3,
     y: -5,
     width: 1.2,
@@ -86,7 +90,7 @@ const demoTables = [
     id: "6",
     name: "Table 6",
     capacity: 6,
-    status: "available" as TableStatus,
+    status: "occupied" as TableStatus,
     x: 5,
     y: -5,
     width: 2,
@@ -96,7 +100,7 @@ const demoTables = [
     id: "7",
     name: "Table 7",
     capacity: 2,
-    status: "available" as TableStatus,
+    status: "reserved" as TableStatus,
     x: -5,
     y: -1,
     width: 1,
@@ -106,7 +110,7 @@ const demoTables = [
     id: "8",
     name: "Table 8",
     capacity: 2,
-    status: "occupied" as TableStatus,
+    status: "reserved" as TableStatus,
     x: -3,
     y: -1,
     width: 1,
@@ -116,7 +120,7 @@ const demoTables = [
     id: "9",
     name: "Table 9",
     capacity: 4,
-    status: "reserved" as TableStatus,
+    status: "available" as TableStatus,
     x: -1,
     y: -1,
     width: 1.2,
@@ -146,7 +150,7 @@ const demoTables = [
     id: "12",
     name: "Table 12",
     capacity: 8,
-    status: "occupied" as TableStatus,
+    status: "available" as TableStatus,
     x: -4,
     y: 3,
     width: 3,
@@ -166,7 +170,7 @@ const demoTables = [
     id: "14",
     name: "Table 14",
     capacity: 2,
-    status: "reserved" as TableStatus,
+    status: "available" as TableStatus,
     x: 4,
     y: 3,
     width: 1,
@@ -497,9 +501,9 @@ const Reservations: React.FC = () => {
 
   return (
     <div className="page-transition h-screen bg-[#a6a999]">
-      <div className="flex sm:justify-center ">
+      <ReserveDiv className="flex sm:justify-center ">
         <h2 className="section-heading mb-0 text-4xl">Reserve a Table</h2>
-      </div>
+      </ReserveDiv>
 
       {/* Main content with left-right split */}
       <div className="flex flex-col lg:flex-row gap-6 justify-center">
@@ -606,98 +610,6 @@ const Reservations: React.FC = () => {
           </Card>
         </div>
       </div>
-
-      {/* Reservation Details Dialog */}
-      {/* {selectedReservation && (
-        <Dialog open={isReservationDetailsOpen} onOpenChange={setIsReservationDetailsOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Reservation Details</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <h4 className="font-medium">Customer</h4>
-                  <p>{selectedReservation.customerName}</p>
-                </div>
-                <div>
-                  <h4 className="font-medium">Table</h4>
-                  <p>{selectedReservation.tableName}</p>
-                </div>
-                <div>
-                  <h4 className="font-medium">Date & Time</h4>
-                  <p>{selectedReservation.date} at {selectedReservation.time}</p>
-                </div>
-                <div>
-                  <h4 className="font-medium">Party Size</h4>
-                  <p>{selectedReservation.partySize} people</p>
-                </div>
-                <div>
-                  <h4 className="font-medium">Contact</h4>
-                  <p>{selectedReservation.customerPhone}</p>
-                  <p className="text-sm text-muted-foreground">{selectedReservation.customerEmail}</p>
-                </div>
-                <div>
-                  <h4 className="font-medium">Status</h4>
-                  <Badge 
-                    variant="outline" 
-                    className={`${getReservationStatusColor(selectedReservation.status)}`}
-                  >
-                    {selectedReservation.status}
-                  </Badge>
-                </div>
-              </div>
-              
-              {selectedReservation.specialRequests && (
-                <div>
-                  <h4 className="font-medium">Special Requests</h4>
-                  <p className="text-sm">{selectedReservation.specialRequests}</p>
-                </div>
-              )}
-              
-              {selectedReservation.allergies && (
-                <div>
-                  <h4 className="font-medium">Allergies</h4>
-                  <p className="text-sm">{selectedReservation.allergies}</p>
-                </div>
-              )}
-            </div>
-            
-            <DialogFooter className="flex justify-between">
-              {selectedReservation.status === "pending" && (
-                <>
-                  <Button 
-                    variant="destructive" 
-                    onClick={() => handleUpdateReservationStatus(selectedReservation.id, "cancelled")}
-                  >
-                    Cancel Reservation
-                  </Button>
-                  <Button 
-                    variant="default" 
-                    onClick={() => handleUpdateReservationStatus(selectedReservation.id, "confirmed")}
-                  >
-                    Confirm Reservation
-                  </Button>
-                </>
-              )}
-              
-              {selectedReservation.status === "confirmed" && (
-                <Button 
-                  variant="destructive" 
-                  onClick={() => handleUpdateReservationStatus(selectedReservation.id, "cancelled")}
-                >
-                  Cancel Reservation
-                </Button>
-              )}
-              
-              <DialogClose asChild>
-                <Button variant="outline">Close</Button>
-              </DialogClose>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      )} */}
-
       {/* Booking Form Dialog */}
       <Dialog open={isBookingFormOpen} onOpenChange={setIsBookingFormOpen}>
         <DialogContent className="max-w-md mx-auto bg-white p-8 md:p-8 rounded-lg">
