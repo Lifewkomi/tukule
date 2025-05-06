@@ -3,27 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Calendar, CalendarDays, Users, Filter, X } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TableVisualization from "@/components/reservations/TableVisualization";
+import ReservationForm from "@/components/reservations/ReservationForm";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogClose,
-} from "@/components/ui/dialog";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
@@ -610,208 +594,17 @@ const Reservations: React.FC = () => {
           </Card>
         </div>
       </div>
+
+
       {/* Booking Form Dialog */}
-      <Dialog open={isBookingFormOpen} onOpenChange={setIsBookingFormOpen}>
-        <DialogContent className="max-w-md mx-auto bg-white p-8 md:p-8 rounded-lg">
-          <DialogHeader className="mb-6">
-            <DialogTitle className="text-xl font-semibold text-center">
-              Book {tableToBook?.name}
-            </DialogTitle>
-          </DialogHeader>
-
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(handleSubmitBooking)}
-              className="space-y-6"
-            >
-              <FormField
-                control={form.control}
-                name="customerName"
-                render={({ field }) => (
-                  <FormItem className="mb-1">
-                    <FormLabel className="font-medium mb-1.5 block">
-                      Full Name
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="John Doe"
-                        {...field}
-                        required
-                        className="p-3 rounded-md w-full border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                <FormField
-                  control={form.control}
-                  name="customerEmail"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="font-medium mb-1.5 block">
-                        Email
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          placeholder="john@example.com"
-                          {...field}
-                          required
-                          className="p-3 rounded-md w-full border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="customerPhone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="font-medium mb-1.5 block">
-                        Phone
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="555-123-4567"
-                          {...field}
-                          required
-                          className="p-3 rounded-md w-full border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                <FormField
-                  control={form.control}
-                  name="date"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="font-medium mb-1.5 block">
-                        Date
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="date"
-                          {...field}
-                          required
-                          className="p-3 rounded-md w-full border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="time"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="font-medium mb-1.5 block">
-                        Time
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="time"
-                          {...field}
-                          required
-                          className="p-3 rounded-md w-full border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <FormField
-                control={form.control}
-                name="partySize"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-medium mb-1.5 block">
-                      Party Size
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        min={1}
-                        max={tableToBook?.capacity || 10}
-                        {...field}
-                        required
-                        className="p-3 rounded-md w-full border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </FormControl>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Max capacity: {tableToBook?.capacity || "N/A"}
-                    </p>
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="specialRequests"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-medium mb-1.5 block">
-                      Special Requests
-                    </FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Any special requests for your reservation..."
-                        {...field}
-                        className="p-3 rounded-md w-full min-h-24 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="allergies"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-medium mb-1.5 block">
-                      Allergies
-                    </FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Any food allergies or dietary restrictions..."
-                        {...field}
-                        className="p-3 rounded-md w-full min-h-24 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-
-              <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-4 mt-6">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={handleCancelBooking}
-                  className="w-full sm:w-auto py-2.5"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  className="w-full sm:w-auto py-2.5 bg-blue-600 hover:bg-blue-700"
-                >
-                  Book Now
-                </Button>
-              </DialogFooter>
-            </form>
-          </Form>
-        </DialogContent>
-      </Dialog>
+      {isBookingFormOpen && tableToBook && (
+        <ReservationForm
+          tableId={tableToBook.id}
+          tableName={tableToBook.name}
+          onClose={() => setIsBookingFormOpen(false)}
+          onConfirm={handleSubmitBooking}
+        />
+      )}
     </div>
   );
 };
