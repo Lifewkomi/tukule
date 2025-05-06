@@ -1,4 +1,4 @@
-# 🧆 TUKULE - Let's Eat
+# 🧆 TUKULE - Let's Eat (Final Year Project)
 # A 3D Restaurant Application where users can order meals and reserve seats in 3D.
 
 Tukule is a dynamic, user-friendly full-stack, immersive web platform designed to modernize the restaurant reservation and dining experience. Built with cutting-edge front-end technologies, 3D visualizations, and robust backend services, Tukule lets customers visually explore menu items and restaurant table layouts in real-time before making reservations. Whether you're a foodie or a restaurant owner, Tukule redefines how you interact with food.
@@ -8,8 +8,10 @@ This is a product that is under development. It was created to be a middleware b
 The experience of reserving seats in restaurants is often boring and does not allow for a correct preview of the experience before purchase or reservations.
 
 ## 🚀 Live Demo
-Demo Link -> tukule.vercel.app
-Admin Demo Link -> tukule-admin.vercel.app
+
+Demo Link -> (https://www.tukule.vercel.app)
+---
+Admin Demo Link -> (https://tukule-admin.vercel.app)
 
 ---
 
@@ -32,20 +34,18 @@ Admin Demo Link -> tukule-admin.vercel.app
 ### Frontend
 - **React** (with TypeScript + Vite)
 - **Framer Motion** – Page transitions & UI animation
-- **GSAP** – Scroll animations & micro-interactions
 - **ThreeJS** – 3D visualizations of food and tables
 - **Tailwind CSS** – Utility-first styling
 - **React Hook Form + Zod** – Form handling & validation
 - **React Router DOM** – Navigation & routing
-- **i18next** – Internationalization support
 
 ### Backend
 - **Node.js + Express**
 - **MongoDB (with Mongoose)**
 - **Firebase Auth** – User authentication
 - **Cloudinary** – Image uploads (for food and tables)
-- **WebSockets / Socket.io** – Real-time table availability
-- **Vercel / Render** – Deployment
+- **WebSockets** – Real-time table availability
+- **Vercel** – Deployment
 
 ---
 
@@ -134,7 +134,7 @@ VITE_BASE_API_URL=http://localhost:5000
 
 - 🔐 **Firebase Auth** – Secure user login and sign-up
 - 📦 **Cloudinary** – Handles image hosting (3D models, food, UI)
-- 🔄 **Socket.io** – Real-time table availability and feedback
+- 🔄 **websockets** – Real-time table availability and feedback
 - 📈 **Vercel Analytics** – Tracks app performance and visitor data
 
 ---
@@ -155,18 +155,18 @@ We welcome all kinds of contributions! Here's how you can help:
 
 - 📲 Mobile App (React Native / Expo)
 - 🤳 User photo reviews
-- 🧠 AI-powered meal suggestions
-- 🪑 Dynamic table booking availability via ML
+- 🧠 AI-powered Support Bot
 
 ---
 
 ## 🧑‍🏫 Author
 
-Built with 💛 by **[PHILEMON KOMI]**, Final Year Software Engineering Student at [LAIKIPIA UNIVERSITY].
+Built with by **PHILEMON KOMI**, BSc. Computer Science - LAIKIPIA UNIVERSITY.
 
 - 💼 [LinkedIn] > (https://linkedin.com/in/philemon-komi/)
 - 📧 [E-Mail] > philemonkomi46@gmail.com
 - 🌍 [Portfolio] > (https://philemonkomi.vercel.app)
+- 📲 [Whatsapp] > (+254-794-775-697)
 
 ---
 
