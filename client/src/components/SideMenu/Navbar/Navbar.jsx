@@ -49,8 +49,6 @@ const links = [
   { title: "Reserve a Table", to: "/reservations" },
   { title: "Shop", to: "/shop" },
   { title: "Contacts", to: "/contacts" },
-  { title: "Admin", to: "/admin" },
-
 ];
 
 const footerLinks = [

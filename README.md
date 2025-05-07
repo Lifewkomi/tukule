@@ -151,6 +151,14 @@ We welcome all kinds of contributions! Here's how you can help:
 
 ---
 
+## 🧠 Challenges I Faced
+1. Integrating the Hybrid 3D menu for customers to actually orbit and pan a 3d food model.
+2. Scaling the 3d tables and its visualization to a database.
+3. Real-time booking of tables using websockets
+4. Modelling large scale Restaurant 3d models and 3d food models using blender
+5. ThreeJS and Blender integration errors into the website and rendering errors
+6. 3d mobile responsiveness
+
 ## 📣 Future Enhancements
 
 - 📲 Mobile App (React Native / Expo)
