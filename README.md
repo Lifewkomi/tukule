@@ -9,9 +9,9 @@ The experience of reserving seats in restaurants is often boring and does not al
 
 ## 🚀 Live Demo
 
-Demo Link -> (https://www.tukule.vercel.app)
+Demo Link -> (https://www.tukule.vercel.app/)
 ---
-Admin Demo Link -> (https://tukule-admin.vercel.app)
+Admin Demo Link -> (https://tukule-admin.vercel.app/)
 
 ---
 
