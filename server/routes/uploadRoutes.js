@@ -27,16 +27,16 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // POST /api/upload - Endpoint to upload an image file
-router.post("/", upload.single("imgUrl"), (req, res) => {
-  try {
-    // Build the public URL for the uploaded file.
-    // Assuming static files are served from "public".
-    const fileUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
-    res.status(201).json({ imgUrl: fileUrl });
-  } catch (error) {
-    console.error("Upload error:", error);
-    res.status(500).json({ error: "Image upload failed" });
-  }
-});
+// router.post("/", upload.single("imgUrl"), (req, res) => {
+//   try {
+//     // Build the public URL for the uploaded file.
+//     // Assuming static files are served from "public".
+//     const fileUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+//     res.status(201).json({ imgUrl: fileUrl });
+//   } catch (error) {
+//     console.error("Upload error:", error);
+//     res.status(500).json({ error: "Image upload failed" });
+//   }
+// });
 
 module.exports = router;

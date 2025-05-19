@@ -12,7 +12,7 @@ const mongoURI = process.env.MONGO_URI;
 const connectDB = async () => {
   mongoose
     .connect(mongoURI)
-    .then(() => console.log("MongoDB connected successfully"))
+    .then(() => console.log("Connected to the Internet & MongoDB connected successfully"))
     .catch((err) => console.error("MongoDB connection error:", err));
 };
 
