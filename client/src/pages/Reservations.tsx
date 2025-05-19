@@ -484,10 +484,12 @@ const Reservations: React.FC = () => {
     : tables;
 
   return (
-    <div className="page-transition h-screen bg-[#a6a999]">
+    <div className="page-transition h-screen bg-[#dfdfdf]">
       <ReserveDiv className="flex sm:justify-center ">
-        <h2 className="section-heading mb-0 text-4xl">Reserve a Table</h2>
+        <h2 className="section-heading mb-0 text-4xl">Table Reservations</h2>
       </ReserveDiv>
+
+      
 
       {/* Main content with left-right split */}
       <div className="flex flex-col lg:flex-row gap-6 justify-center">
@@ -559,6 +561,7 @@ const Reservations: React.FC = () => {
                           Details
                         </Button>
                         <Button
+                          className=" cursor-pointer bg-black text-white border-none"
                           variant="default"
                           size="sm"
                           disabled={table.status !== "available"}

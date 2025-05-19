@@ -43,7 +43,7 @@ const TableVisualization: React.FC<TableVisualizationProps> = ({
 
     // Scene setup
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xf8f9fa);
+    scene.background = new THREE.Color(0xF3E5AB);
     sceneRef.current = scene;
 
     // Camera setup
@@ -330,7 +330,7 @@ const TableVisualization: React.FC<TableVisualizationProps> = ({
     if (!cameraRef.current || !controlsRef.current) return;
     
     if (view === "2d") {
-      cameraRef.current.position.set(0, 15, 0.001);
+      cameraRef.current.position.set(0, 20, 0.001);
       cameraRef.current.lookAt(0, 0, 0);
       controlsRef.current.enabled = false;
     } else {
